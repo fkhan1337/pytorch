@@ -818,6 +818,9 @@ struct PythonPrintImpl {
           ss, "float", v.toDoubleListRef().size(), v);
     } else {
       ss << v;
+      std::cout << "ss << v" << std::endl;
+      std::cout << "isNone:" << v.isNone() << "isInt: " << v.isInt() << " isString: " << v.isString() << " isBool:" << v.isBool() << " isDouble:" << v.isDouble() << std::endl;
+      std::cout << "ss.str():" << ss.str() << std::endl;
     }
     stmt << ss.str();
   }
@@ -1265,8 +1268,10 @@ struct PythonPrintImpl {
       indent();
       body_ << name << " : " << "Final[" << v.type()->python_str() << "] = ";
       auto ss = std::make_shared<TaggedStringStream>(&source_range_stack_);
+      std::cout << "trying to save " << name << " " << ss->str() << std::endl;
       printConstant(*ss, v);
       body_ << ss->str() << "\n";
+      std::cout << "Saving constant " << name << "=" << ss->str() << std::endl;
     }
   }
 
